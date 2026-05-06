@@ -12,6 +12,7 @@
     --white:#f0ece3;
     --cream:#e8e0d0;
     --gold:#c9a84c;
+    --border:#4a4026a8;
     --dim:#1a1a1a;
     --mid:#2e2e2e;
     --text-muted:#888;
@@ -64,6 +65,13 @@
     z-index:100;
     mix-blend-mode:normal;
   }
+  nav.scrolled{
+    background:rgba(8,8,8,.96);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    padding:1.1rem 4rem;
+    border-bottom:1px solid var(--border);
+  }
   .nav-logo{
     font-family:var(--mono);
     font-size:0.7rem;
@@ -84,6 +92,8 @@
     transition:color 0.3s;
   }
   .nav-links a:hover{color:var(--white)}
+  .nav-links a.active{opacity:1;color:var(--gold)}
+  .nav-links a.active::after{transform:scaleX(1)}
 
   /* HERO */
   .hero{
@@ -947,9 +957,10 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
-<nav>
+<nav id="nav">
   <div class="nav-logo">BM — Portfolio</div>
   <ul class="nav-links">
+    <li><a href="#hero"></a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#films">Films</a></li>
     <!-- <li><a href="#gallery">Gallery</a></li> -->
@@ -958,7 +969,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-bg-photos">
     <div class="hero-photo-slot"><img src="IMG-20250426-WA0002.jpg" alt=""></div>
     <div class="hero-photo-slot"><img src="IMG_20240112_004242_358.jpg" alt=""></div>
@@ -1278,6 +1289,26 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{
   el.style.transitionDelay=`${i%3*0.15}s`;
   obs.observe(el);
 });
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+// Active nav link on scroll (scroll spy)
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const spySections = Array.from(navAnchors).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function updateActiveNav() {
+  const scrollY = window.scrollY + window.innerHeight * 0.25;
+  let current = spySections[0];
+  spySections.forEach(sec => {
+    if (sec.offsetTop <= scrollY) current = sec;
+  });
+  navAnchors.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
 </script>
 </body>
 </html>
