@@ -563,59 +563,119 @@
     margin-top:0.5rem;
   }
 
-  /* ── SKILLS / FULL STACK ── */
+  /* ── SKILLS CARDS ── */
   .skills-section{
     padding:10rem 4rem;
     border-top:1px solid var(--mid);
-    /* display:grid; */
-    /* grid-template-columns:1fr 1fr; */
-    /* gap:8rem; */
-    align-items:start;
   }
+  .skills-left{margin-bottom:4rem}
   .skills-left h2{
     font-family:var(--serif);
     font-size:clamp(2.5rem,5vw,4.5rem);
     font-weight:300;
     line-height:1.05;
-    margin-bottom:3.5rem;
     color:var(--white);
   }
   .skills-left h2 em{font-style:italic;color:var(--gold)}
-  .skill-item{
-    display:flex;align-items:center;gap:1.5rem;
-    padding:1.1rem 0;
-    border-bottom:1px solid var(--mid);
+
+  .skills-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:var(--mid);
   }
-  .skill-item:first-of-type{border-top:1px solid var(--mid)}
-  .skill-name{
+  .skill-card{
+    background:var(--black);
+    padding:2.5rem;
+    transition:background 0.3s;
+    position:relative;
+  }
+  .skill-card:hover{background:var(--dim)}
+  .skill-card--wide{
+    grid-column:1 / -1;
+  }
+  .skill-card-icon{
     font-family:var(--mono);
-    font-size:0.62rem;
+    font-size:0.55rem;
+    letter-spacing:0.35em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:1.5rem;
+  }
+  .skill-card-title{
+    font-family:var(--serif);
+    font-size:1.6rem;
+    font-weight:300;
+    font-style:italic;
+    color:var(--white);
+    margin-bottom:1.5rem;
+    line-height:1;
+  }
+  .skill-card-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:0.65rem;
+  }
+  .skill-card-list li{
+    font-family:var(--mono);
+    font-size:0.6rem;
     letter-spacing:0.15em;
     text-transform:uppercase;
     color:var(--text-muted);
-    flex:0 0 180px;
-  }
-  .skill-bar-wrap{
-    flex:1;
-    height:1px;
-    background:var(--mid);
+    padding-left:1rem;
     position:relative;
+    transition:color 0.3s;
   }
-  .skill-bar{
-    height:1px;
-    background:var(--gold);
-    position:absolute;top:0;left:0;
-    transform-origin:left;
-    transform:scaleX(0);
-    transition:transform 1.2s cubic-bezier(0.16,1,0.3,1);
+  .skill-card-list li::before{
+    content:'—';
+    position:absolute;left:0;
+    color:var(--gold);
+    opacity:0.5;
   }
-  .skill-bar.animated{transform:scaleX(1)}
-  .skill-pct{
+  .skill-card:hover .skill-card-list li{color:rgba(240,236,227,0.7)}
+
+  /* Wide card langs layout */
+  .skill-card-langs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem 3rem;
+    align-items:center;
+  }
+  .lang-item{
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+  }
+  .lang-name{
     font-family:var(--mono);
-    font-size:0.55rem;
+    font-size:0.6rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
     color:var(--text-muted);
-    flex:0 0 32px;
-    text-align:right;
+    transition:color 0.3s;
+  }
+  .skill-card:hover .lang-name{color:rgba(240,236,227,0.7)}
+  .lang-level{
+    font-family:var(--mono);
+    font-size:0.5rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid rgba(201,168,76,0.4);
+    padding:0.2rem 0.5rem;
+  }
+  .lang-divider{
+    width:1px;height:24px;
+    background:var(--mid);
+    margin:0 0.5rem;
+  }
+
+  @media(max-width:768px){
+    .skills-section{padding:5rem 1.25rem}
+    .skills-cards{grid-template-columns:1fr}
+    .skill-card--wide{grid-column:1}
+    .lang-divider{display:none}
   }
 
   /* ── WORKSHOPS / TRAINING ── */
@@ -705,6 +765,106 @@
     font-size:0.9rem;
     line-height:1.85;
     color:rgba(240,236,227,0.55);
+  }
+
+  /* ── SHOWREEL ── */
+  .showreel-section{
+    padding:10rem 4rem;
+    border-top:1px solid var(--mid);
+    position:relative;
+  }
+  .showreel-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:4rem;
+  }
+  .showreel-top h2{
+    font-family:var(--serif);
+    font-size:clamp(3rem,6vw,6rem);
+    font-weight:300;
+    line-height:1;
+    color:var(--white);
+  }
+  .showreel-top h2 em{font-style:italic;color:var(--gold)}
+  .showreel-top p{
+    max-width:380px;
+    font-size:0.95rem;
+    line-height:1.85;
+    color:rgba(240,236,227,0.5);
+    text-align:right;
+  }
+  .showreel-player{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#0d0d0d;
+    overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .showreel-player video{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  /* Big play button overlay */
+  .showreel-overlay{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(8,8,8,0.55);
+    transition:opacity 0.4s;
+    cursor:pointer;
+  }
+  .showreel-overlay.hidden{opacity:0;pointer-events:none}
+  .play-btn{
+    width:88px;height:88px;
+    border:1px solid rgba(201,168,76,0.6);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform 0.3s, border-color 0.3s, background 0.3s;
+    background:rgba(8,8,8,0.4);
+  }
+  .play-btn svg{
+    width:28px;height:28px;
+    fill:var(--gold);
+    margin-left:5px;
+  }
+  .showreel-overlay:hover .play-btn{
+    transform:scale(1.1);
+    border-color:var(--gold);
+    background:rgba(201,168,76,0.15);
+  }
+  /* Label under video */
+  .showreel-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:1.5rem;
+  }
+  .showreel-label{
+    font-family:var(--mono);
+    font-size:0.58rem;
+    letter-spacing:0.35em;
+    color:var(--text-muted);
+    text-transform:uppercase;
+  }
+  .showreel-label span{color:var(--gold)}
+
+  /* Note for self-hosted video */
+  .showreel-note{
+    margin-top:0.75rem;
+    font-family:var(--mono);
+    font-size:0.52rem;
+    letter-spacing:0.2em;
+    color:rgba(136,136,136,0.5);
+    text-transform:uppercase;
+  }
+
+  @media(max-width:768px){
+    .showreel-section{padding:5rem 1.25rem}
+    .showreel-top{flex-direction:column;align-items:flex-start;gap:1.5rem;margin-bottom:2.5rem}
+    .showreel-top p{text-align:left;max-width:100%}
+    .play-btn{width:64px;height:64px}
+    .play-btn svg{width:20px;height:20px}
+    .showreel-meta{flex-direction:column;align-items:flex-start;gap:0.5rem}
   }
 
   /* ANIMATIONS */
@@ -963,7 +1123,7 @@
     <li><a href="#hero"></a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#films">Films</a></li>
-    <!-- <li><a href="#gallery">Gallery</a></li> -->
+    <li><a href="#showreel">Showreel</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -1047,55 +1207,88 @@
     <p>I'm still early in my journey, but what I lack in years I make up for in commitment. Every set I've worked on has taught me something new — about people, about process, about how fragile a shoot can be and how much a calm, prepared presence can change that. I don't have all the answers yet, but I know how to listen, adapt, and show up ready to give everything I have to the work.</p>
   </div>
   <div class="who-right reveal">
-    <div class="skills-right reveal" style="padding-top:2rem">
-    <div class="bonus-box">
-      <h4>I also code.</h4>
-      <p>Web development, programming, system thinking — not as a hobby, but as a profession. On set, this means I talk to technical teams in their own language and solve problems before they become problems. It's a rare combination.</p>
+    <div class="who-stat">
+      <div class="who-stat-num">4</div>
+      <div class="who-stat-label">International Festival Screenings</div>
+      <div class="who-stat-desc">Cairo · Egyptian American · Joburg · African Film Festival New York</div>
     </div>
-  </div>
+    <div class="who-stat">
+      <div class="who-stat-num">3+</div>
+      <div class="who-stat-label">Years on Professional Sets</div>
+      <div class="who-stat-desc">Short films, commercials, and TV productions across Egypt</div>
+    </div>
+    <div class="who-stat">
+      <div class="who-stat-num">2</div>
+      <div class="who-stat-label">Disciplines Mastered</div>
+      <div class="who-stat-desc">Filmmaking & software engineering — a rare combination on any set</div>
+    </div>
   </div>
 </section>
 
-<!-- SKILLS / THE FULL STACK -->
-<section class="skills-section">
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
   <div class="skills-left reveal">
     <div class="section-label">Skills</div>
     <h2>What I bring —<br><em>The Full Stack</em></h2>
-    <div class="skill-item">
-      <span class="skill-name">On-Set Direction</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
-      <span class="skill-pct">95</span>
+  </div>
+  <div class="skills-cards reveal">
+
+    <div class="skill-card">
+      <div class="skill-card-icon">01</div>
+      <h3 class="skill-card-title">Production</h3>
+      <ul class="skill-card-list">
+        <li>Production Management</li>
+        <li>Scheduling & Planning</li>
+        <li>Budgeting</li>
+        <li>Location Management</li>
+        <li>Crew Coordination</li>
+      </ul>
     </div>
-    <div class="skill-item">
-      <span class="skill-name">Production Logistics</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
-      <span class="skill-pct">90</span>
+
+    <div class="skill-card">
+      <div class="skill-card-icon">02</div>
+      <h3 class="skill-card-title">Direction</h3>
+      <ul class="skill-card-list">
+        <li>Assistant Directing</li>
+        <li>On-Set Management</li>
+        <li>Storyboarding</li>
+        <li>Scriptwriting</li>
+        <li>Team Leadership</li>
+      </ul>
     </div>
-    <div class="skill-item">
-      <span class="skill-name">Scheduling & Planning</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
-      <span class="skill-pct">92</span>
+
+    <div class="skill-card">
+      <div class="skill-card-icon">03</div>
+      <h3 class="skill-card-title">Technical</h3>
+      <ul class="skill-card-list">
+        <li>Cinematography Basics</li>
+        <li>Adobe Premiere Pro</li>
+        <li>Web Development</li>
+        <li>Programming</li>
+        <li>Systems Thinking</li>
+      </ul>
     </div>
-    <div class="skill-item">
-      <span class="skill-name">Scriptwriting</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
-      <span class="skill-pct">80</span>
+
+    <div class="skill-card skill-card--wide">
+      <div class="skill-card-icon">04</div>
+      <h3 class="skill-card-title">Languages & Soft Skills</h3>
+      <div class="skill-card-langs">
+        <div class="lang-item">
+          <span class="lang-name">Arabic</span>
+          <span class="lang-level">Native</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level">Professional</span>
+        </div>
+        <div class="lang-divider"></div>
+        <div class="lang-item"><span class="lang-name">Problem Solving</span></div>
+        <div class="lang-item"><span class="lang-name">Adaptability</span></div>
+        <div class="lang-item"><span class="lang-name">Communication</span></div>
+        <div class="lang-item"><span class="lang-name">Open to Relocation</span></div>
+      </div>
     </div>
-    <div class="skill-item">
-      <span class="skill-name">Cinematography</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
-      <span class="skill-pct">75</span>
-    </div>
-    <div class="skill-item">
-      <span class="skill-name">Team Leadership</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
-      <span class="skill-pct">88</span>
-    </div>
-    <div class="skill-item">
-      <span class="skill-name">Web Development</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
-      <span class="skill-pct">85</span>
-    </div>
+
   </div>
 </section>
 
@@ -1208,6 +1401,34 @@
   </div>
 </section> -->
 
+<!-- SHOWREEL -->
+<section class="showreel-section reveal" id="showreel">
+  <div class="showreel-top">
+    <h2>My<br><em>Showreel</em></h2>
+    <p>A 2-minute journey through cinemas — capturing the atmosphere, textures, and magic of what it feels like to be inside a theatre made for stories.</p>
+  </div>
+
+  <div class="showreel-player" id="showreelPlayer">
+    <!-- Replace the src below with your actual video filename once uploaded to your server -->
+    <video id="showreelVideo" preload="metadata" playsinline>
+      <source src="Sequence 01_1.mp4" type="video/mp4">
+    </video>
+
+    <div class="showreel-overlay" id="showreelOverlay" onclick="playShowreel()">
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="showreel-meta">
+    <p class="showreel-label">Besho Medhat · <span>2025</span> · Cinematography Reel</p>
+    <p class="showreel-label">Duration: <span>~2 min</span></p>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="contact-left reveal">
@@ -1226,7 +1447,7 @@
         <span class="contact-link-label">WhatsApp</span>
         <span class="contact-link-value">Send a message</span>
       </a>
-      <a class="contact-link" href="Besho-Medhat-CV.pdf" download>
+      <a class="contact-link" href="Beshoy-Medhat-CV.pdf" download>
         <span class="contact-link-label">My CV</span>
         <span class="contact-link-value">Download</span>
       </a>
@@ -1247,6 +1468,24 @@
 </footer>
 
 <script>
+// Showreel player
+function playShowreel(){
+  const video = document.getElementById('showreelVideo');
+  const overlay = document.getElementById('showreelOverlay');
+  video.play();
+  overlay.classList.add('hidden');
+  video.addEventListener('pause', () => overlay.classList.remove('hidden'), {once:false});
+  video.addEventListener('ended', () => overlay.classList.remove('hidden'), {once:false});
+}
+document.getElementById('showreelPlayer').addEventListener('click', function(e){
+  const video = document.getElementById('showreelVideo');
+  const overlay = document.getElementById('showreelOverlay');
+  if(e.target === video && !video.paused){
+    video.pause();
+    overlay.classList.remove('hidden');
+  }
+});
+
 // Custom cursor — desktop only
 const isTouchDevice=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 const cursor=document.getElementById('cursor');
